@@ -1,0 +1,1052 @@
+21:11:03 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+21:11:05 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+21:11:05 INFO  : Registering command handlers for Vitis TCF services
+21:11:06 INFO  : Platform repository initialization has completed.
+21:11:07 INFO  : XSCT server has started successfully.
+21:11:07 INFO  : Successfully done setting XSCT server connection channel  
+21:11:07 INFO  : plnx-install-location is set to ''
+21:11:07 INFO  : Successfully done setting workspace for the tool. 
+21:11:07 INFO  : Successfully done query RDI_DATADIR 
+21:12:02 INFO  : Result from executing command 'getProjects': lasercom_pl_total_v0_wrapper
+21:12:02 INFO  : Result from executing command 'getPlatforms': xilinx_vck190_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm;xilinx_vck190_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_dfx_202320_1/xilinx_vck190_base_dfx_202320_1.xpfm;xilinx_vek280_es1_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm;xilinx_vmk180_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vmk180_base_202320_1/xilinx_vmk180_base_202320_1.xpfm;xilinx_zcu102_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_202320_1/xilinx_zcu102_base_202320_1.xpfm;xilinx_zcu102_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_dfx_202320_1/xilinx_zcu102_base_dfx_202320_1.xpfm;xilinx_zcu104_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu104_base_202320_1/xilinx_zcu104_base_202320_1.xpfm
+21:12:03 WARN  : An unexpected exception occurred in the module 'platform project logging'
+21:12:04 INFO  : Platform 'lasercom_pl_total_v0_wrapper' is added to custom repositories.
+21:12:11 INFO  : Platform 'lasercom_pl_total_v0_wrapper' is added to custom repositories.
+21:12:50 INFO  : Result from executing command 'getProjects': lasercom_pl_total_v0_wrapper
+21:12:50 INFO  : Result from executing command 'getPlatforms': lasercom_pl_total_v0_wrapper|E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm;xilinx_vck190_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm;xilinx_vck190_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_dfx_202320_1/xilinx_vck190_base_dfx_202320_1.xpfm;xilinx_vek280_es1_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm;xilinx_vmk180_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vmk180_base_202320_1/xilinx_vmk180_base_202320_1.xpfm;xilinx_zcu102_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_202320_1/xilinx_zcu102_base_202320_1.xpfm;xilinx_zcu102_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_dfx_202320_1/xilinx_zcu102_base_dfx_202320_1.xpfm;xilinx_zcu104_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu104_base_202320_1/xilinx_zcu104_base_202320_1.xpfm
+21:14:46 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+21:15:29 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+21:15:37 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:15:38 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+21:15:38 INFO  : 'jtag frequency' command is executed.
+21:15:38 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+21:15:38 INFO  : Context for 'APU' is selected.
+21:15:38 INFO  : System reset is completed.
+21:15:41 INFO  : 'after 3000' command is executed.
+21:15:41 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+21:15:42 ERROR : could not find configuration request.
+21:15:42 ERROR : Exception occured while running Program Device.
+java.lang.RuntimeException: could not find configuration request.
+21:15:42 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+----------------End of Script----------------
+
+21:15:42 ERROR : could not find configuration request.
+21:15:56 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:15:56 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+21:15:56 INFO  : 'jtag frequency' command is executed.
+21:15:56 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+21:15:56 INFO  : Context for 'APU' is selected.
+21:15:56 INFO  : System reset is completed.
+21:15:59 INFO  : 'after 3000' command is executed.
+21:15:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+21:16:04 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+21:16:04 INFO  : Context for 'APU' is selected.
+21:16:05 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+21:16:05 INFO  : 'configparams force-mem-access 1' command is executed.
+21:16:05 INFO  : Context for 'APU' is selected.
+21:16:05 INFO  : Boot mode is read from the target.
+21:16:05 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:16:05 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:16:06 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:16:06 INFO  : 'set bp_16_6_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+21:16:06 INFO  : 'con -block -timeout 60' command is executed.
+21:16:06 INFO  : 'bpremove $bp_16_6_fsbl_bp' command is executed.
+21:16:06 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:16:06 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:16:07 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:16:07 INFO  : 'configparams force-mem-access 0' command is executed.
+21:16:07 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_16_6_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_16_6_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:16:07 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:16:07 INFO  : 'con' command is executed.
+21:16:07 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+21:16:07 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+21:18:25 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+21:18:38 INFO  : Disconnected from the channel tcfchan#2.
+21:18:39 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:18:48 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+21:18:48 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+21:18:58 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:18:58 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+21:18:58 INFO  : 'jtag frequency' command is executed.
+21:18:58 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+21:18:58 INFO  : Context for 'APU' is selected.
+21:18:58 INFO  : System reset is completed.
+21:19:01 INFO  : 'after 3000' command is executed.
+21:19:02 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+21:19:06 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+21:19:07 INFO  : Context for 'APU' is selected.
+21:19:07 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+21:19:07 INFO  : 'configparams force-mem-access 1' command is executed.
+21:19:07 INFO  : Context for 'APU' is selected.
+21:19:07 INFO  : Boot mode is read from the target.
+21:19:07 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:19:07 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:19:07 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:19:07 INFO  : 'set bp_19_7_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+21:19:08 INFO  : 'con -block -timeout 60' command is executed.
+21:19:08 INFO  : 'bpremove $bp_19_7_fsbl_bp' command is executed.
+21:19:08 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:19:08 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:19:09 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:19:09 INFO  : 'configparams force-mem-access 0' command is executed.
+21:19:09 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_19_7_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_19_7_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:19:09 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:19:09 INFO  : 'con' command is executed.
+21:19:09 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+21:19:09 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+21:21:51 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+21:22:01 INFO  : Disconnected from the channel tcfchan#3.
+21:22:02 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:22:11 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+21:22:11 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+21:22:19 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:22:19 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+21:22:19 INFO  : 'jtag frequency' command is executed.
+21:22:19 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+21:22:19 INFO  : Context for 'APU' is selected.
+21:22:20 INFO  : System reset is completed.
+21:22:23 INFO  : 'after 3000' command is executed.
+21:22:23 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+21:22:28 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+21:22:28 INFO  : Context for 'APU' is selected.
+21:22:28 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+21:22:28 INFO  : 'configparams force-mem-access 1' command is executed.
+21:22:28 INFO  : Context for 'APU' is selected.
+21:22:28 INFO  : Boot mode is read from the target.
+21:22:28 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:22:28 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:22:29 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:22:29 INFO  : 'set bp_22_29_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+21:22:29 INFO  : 'con -block -timeout 60' command is executed.
+21:22:29 INFO  : 'bpremove $bp_22_29_fsbl_bp' command is executed.
+21:22:29 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:22:29 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:22:30 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:22:30 INFO  : 'configparams force-mem-access 0' command is executed.
+21:22:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_22_29_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_22_29_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:22:30 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:22:30 INFO  : 'con' command is executed.
+21:22:30 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+21:22:30 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+21:24:42 INFO  : Generated template bif file for lasercom_system
+21:24:50 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin
+21:24:51 INFO  : Bootgen command execution is done.
+21:28:57 INFO  : Disconnected from the channel tcfchan#4.
+21:28:58 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:29:07 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+21:29:07 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+21:29:21 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:29:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+21:29:30 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+21:30:19 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+21:30:19 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+21:30:19 INFO  : 'jtag frequency' command is executed.
+21:30:19 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+21:30:19 INFO  : Context for 'APU' is selected.
+21:30:19 INFO  : System reset is completed.
+21:30:23 INFO  : 'after 3000' command is executed.
+21:30:23 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+21:30:27 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+21:30:28 INFO  : Context for 'APU' is selected.
+21:30:28 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+21:30:28 INFO  : 'configparams force-mem-access 1' command is executed.
+21:30:28 INFO  : Context for 'APU' is selected.
+21:30:28 INFO  : Boot mode is read from the target.
+21:30:28 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:30:28 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:30:28 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:30:29 INFO  : 'set bp_30_28_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+21:30:29 INFO  : 'con -block -timeout 60' command is executed.
+21:30:29 INFO  : 'bpremove $bp_30_28_fsbl_bp' command is executed.
+21:30:29 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:30:29 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+21:30:30 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+21:30:30 INFO  : 'configparams force-mem-access 0' command is executed.
+21:30:30 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_30_28_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_30_28_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+21:30:30 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+21:30:30 INFO  : 'con' command is executed.
+21:30:30 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+21:30:30 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+21:39:26 INFO  : Disconnected from the channel tcfchan#5.
+09:27:36 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+09:27:36 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+09:27:39 INFO  : Registering command handlers for Vitis TCF services
+09:27:39 INFO  : XSCT server has started successfully.
+09:27:40 INFO  : Platform repository initialization has completed.
+09:27:42 INFO  : plnx-install-location is set to ''
+09:27:42 INFO  : Successfully done setting XSCT server connection channel  
+09:27:42 INFO  : Successfully done query RDI_DATADIR 
+09:27:42 INFO  : Successfully done setting workspace for the tool. 
+10:21:33 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+10:24:22 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+10:24:33 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:24:34 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+10:24:34 INFO  : 'jtag frequency' command is executed.
+10:24:34 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+10:24:34 INFO  : Context for 'APU' is selected.
+10:24:35 INFO  : System reset is completed.
+10:24:38 INFO  : 'after 3000' command is executed.
+10:24:38 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+10:24:43 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+10:24:43 INFO  : Context for 'APU' is selected.
+10:24:44 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+10:24:44 INFO  : 'configparams force-mem-access 1' command is executed.
+10:24:44 INFO  : Context for 'APU' is selected.
+10:24:44 INFO  : Boot mode is read from the target.
+10:24:44 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:24:44 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+10:24:45 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+10:24:45 INFO  : 'set bp_24_45_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+10:24:46 INFO  : 'con -block -timeout 60' command is executed.
+10:24:46 INFO  : 'bpremove $bp_24_45_fsbl_bp' command is executed.
+10:24:46 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:24:46 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+10:24:47 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+10:24:47 INFO  : 'configparams force-mem-access 0' command is executed.
+10:24:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_24_45_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_24_45_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:24:47 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:24:47 INFO  : 'con' command is executed.
+10:24:47 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+10:24:47 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+10:26:19 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+10:26:21 INFO  : Bootgen command execution is done.
+10:26:41 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+10:26:43 INFO  : Bootgen command execution is done.
+10:37:49 INFO  : Disconnected from the channel tcfchan#1.
+10:37:50 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:37:59 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+10:37:59 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+10:38:10 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+10:38:10 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+10:38:10 INFO  : 'jtag frequency' command is executed.
+10:38:10 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+10:38:10 INFO  : Context for 'APU' is selected.
+10:38:10 INFO  : System reset is completed.
+10:38:13 INFO  : 'after 3000' command is executed.
+10:38:14 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+10:38:18 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+10:38:18 INFO  : Context for 'APU' is selected.
+10:38:24 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+10:38:24 INFO  : 'configparams force-mem-access 1' command is executed.
+10:38:24 INFO  : Context for 'APU' is selected.
+10:38:24 INFO  : Boot mode is read from the target.
+10:38:24 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:38:25 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+10:38:25 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+10:38:25 INFO  : 'set bp_38_25_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+10:38:26 INFO  : 'con -block -timeout 60' command is executed.
+10:38:26 INFO  : 'bpremove $bp_38_25_fsbl_bp' command is executed.
+10:38:26 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:38:26 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+10:38:28 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+10:38:28 INFO  : 'configparams force-mem-access 0' command is executed.
+10:38:28 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_38_25_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_38_25_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+10:38:28 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+10:38:28 INFO  : 'con' command is executed.
+10:38:28 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+10:38:28 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+10:40:26 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+10:40:27 INFO  : Bootgen command execution is done.
+15:00:57 INFO  : Disconnected from the channel tcfchan#2.
+10:42:57 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+10:42:58 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+10:43:00 INFO  : Registering command handlers for Vitis TCF services
+10:43:01 INFO  : Platform repository initialization has completed.
+10:43:02 INFO  : XSCT server has started successfully.
+10:43:02 INFO  : Successfully done setting XSCT server connection channel  
+10:43:04 INFO  : plnx-install-location is set to ''
+10:43:04 INFO  : Successfully done setting workspace for the tool. 
+10:43:04 INFO  : Successfully done query RDI_DATADIR 
+13:23:02 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+13:23:02 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+13:23:05 INFO  : Registering command handlers for Vitis TCF services
+13:23:05 INFO  : Platform repository initialization has completed.
+13:23:05 INFO  : XSCT server has started successfully.
+13:23:05 INFO  : Successfully done setting XSCT server connection channel  
+13:23:05 INFO  : plnx-install-location is set to ''
+13:23:08 INFO  : Successfully done setting workspace for the tool. 
+13:23:08 INFO  : Successfully done query RDI_DATADIR 
+15:57:11 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+15:57:12 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+15:57:14 INFO  : XSCT server has started successfully.
+15:57:14 INFO  : plnx-install-location is set to ''
+15:57:14 INFO  : Successfully done setting XSCT server connection channel  
+15:57:14 INFO  : Registering command handlers for Vitis TCF services
+15:57:14 INFO  : Successfully done setting workspace for the tool. 
+15:57:14 INFO  : Successfully done query RDI_DATADIR 
+15:57:15 INFO  : Platform repository initialization has completed.
+16:02:56 INFO  : Result from executing command 'getProjects': lasercom_pl_total_v0_wrapper
+16:02:56 INFO  : Result from executing command 'getPlatforms': lasercom_pl_total_v0_wrapper|E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm;xilinx_vck190_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm;xilinx_vck190_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vck190_base_dfx_202320_1/xilinx_vck190_base_dfx_202320_1.xpfm;xilinx_vek280_es1_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm;xilinx_vmk180_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_vmk180_base_202320_1/xilinx_vmk180_base_202320_1.xpfm;xilinx_zcu102_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_202320_1/xilinx_zcu102_base_202320_1.xpfm;xilinx_zcu102_base_dfx_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu102_base_dfx_202320_1/xilinx_zcu102_base_dfx_202320_1.xpfm;xilinx_zcu104_base_202320_1|E:/Xilinx/Vitis/2023.2/base_platforms/xilinx_zcu104_base_202320_1/xilinx_zcu104_base_202320_1.xpfm
+16:02:58 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+16:03:18 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+16:03:28 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+16:03:29 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+16:03:29 INFO  : 'jtag frequency' command is executed.
+16:03:29 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+16:03:29 INFO  : Context for 'APU' is selected.
+16:03:30 INFO  : System reset is completed.
+16:03:33 INFO  : 'after 3000' command is executed.
+16:03:33 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+16:03:38 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+16:03:38 INFO  : Context for 'APU' is selected.
+16:03:39 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+16:03:39 INFO  : 'configparams force-mem-access 1' command is executed.
+16:03:39 INFO  : Context for 'APU' is selected.
+16:03:39 INFO  : Boot mode is read from the target.
+16:03:39 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+16:03:39 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+16:03:40 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+16:03:40 INFO  : 'set bp_3_40_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+16:03:41 INFO  : 'con -block -timeout 60' command is executed.
+16:03:41 INFO  : 'bpremove $bp_3_40_fsbl_bp' command is executed.
+16:03:41 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+16:03:41 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+16:03:42 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+16:03:42 INFO  : 'configparams force-mem-access 0' command is executed.
+16:03:42 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_3_40_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_3_40_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+16:03:42 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+16:03:43 INFO  : 'con' command is executed.
+16:03:43 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+16:03:43 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+16:04:43 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+16:04:46 INFO  : Bootgen command execution is done.
+16:24:27 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+16:25:31 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+17:06:49 INFO  : Disconnected from the channel tcfchan#2.
+15:33:35 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+15:33:36 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+15:33:38 INFO  : XSCT server has started successfully.
+15:33:38 INFO  : plnx-install-location is set to ''
+15:33:38 INFO  : Successfully done setting XSCT server connection channel  
+15:33:38 INFO  : Successfully done setting workspace for the tool. 
+15:33:38 INFO  : Successfully done query RDI_DATADIR 
+15:33:38 INFO  : Registering command handlers for Vitis TCF services
+15:33:39 INFO  : Platform repository initialization has completed.
+15:33:43 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+15:35:29 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:35:29 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+15:35:29 INFO  : 'jtag frequency' command is executed.
+15:35:29 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+15:35:29 INFO  : Context for 'APU' is selected.
+15:35:30 INFO  : System reset is completed.
+15:35:33 INFO  : 'after 3000' command is executed.
+15:35:33 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+15:35:38 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+15:35:38 INFO  : Context for 'APU' is selected.
+15:35:39 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+15:35:39 INFO  : 'configparams force-mem-access 1' command is executed.
+15:35:39 INFO  : Context for 'APU' is selected.
+15:35:39 INFO  : Boot mode is read from the target.
+15:35:39 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:35:39 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:35:40 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:35:40 INFO  : 'set bp_35_40_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+15:35:41 INFO  : 'con -block -timeout 60' command is executed.
+15:35:41 INFO  : 'bpremove $bp_35_40_fsbl_bp' command is executed.
+15:35:41 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:35:41 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:35:42 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:35:42 INFO  : 'configparams force-mem-access 0' command is executed.
+15:35:42 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_35_40_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_35_40_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+15:35:42 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:35:42 INFO  : 'con' command is executed.
+15:35:42 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+15:35:42 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+15:50:06 INFO  : Disconnected from the channel tcfchan#1.
+15:50:07 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:50:25 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+15:50:25 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+15:50:36 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:50:47 ERROR : Could not read jtag device properties from the line: 4  dummy_dap (irlen 4)
+15:50:47 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+15:50:47 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+15:51:00 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:51:00 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+15:51:00 INFO  : 'jtag frequency' command is executed.
+15:51:00 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+15:51:00 INFO  : Context for 'APU' is selected.
+15:51:00 INFO  : System reset is completed.
+15:51:03 INFO  : 'after 3000' command is executed.
+15:51:03 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+15:51:08 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+15:51:08 INFO  : Context for 'APU' is selected.
+15:51:13 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+15:51:13 INFO  : 'configparams force-mem-access 1' command is executed.
+15:51:13 INFO  : Context for 'APU' is selected.
+15:51:13 INFO  : Boot mode is read from the target.
+15:51:13 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:51:14 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:51:14 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:51:14 INFO  : 'set bp_51_14_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+15:51:15 INFO  : 'con -block -timeout 60' command is executed.
+15:51:15 INFO  : 'bpremove $bp_51_14_fsbl_bp' command is executed.
+15:51:15 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:51:15 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:51:16 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:51:16 INFO  : 'configparams force-mem-access 0' command is executed.
+15:51:16 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_51_14_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_51_14_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+15:51:16 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:51:16 INFO  : 'con' command is executed.
+15:51:16 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+15:51:16 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+15:53:01 INFO  : Disconnected from the channel tcfchan#2.
+15:53:01 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+15:53:02 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+15:53:02 INFO  : 'jtag frequency' command is executed.
+15:53:02 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+15:53:02 INFO  : Context for 'APU' is selected.
+15:53:02 INFO  : System reset is completed.
+15:53:05 INFO  : 'after 3000' command is executed.
+15:53:05 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+15:53:10 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+15:53:10 INFO  : Context for 'APU' is selected.
+15:53:16 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+15:53:16 INFO  : 'configparams force-mem-access 1' command is executed.
+15:53:16 INFO  : Context for 'APU' is selected.
+15:53:16 INFO  : Boot mode is read from the target.
+15:53:16 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:53:17 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:53:17 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:53:17 INFO  : 'set bp_53_17_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+15:53:18 INFO  : 'con -block -timeout 60' command is executed.
+15:53:18 INFO  : 'bpremove $bp_53_17_fsbl_bp' command is executed.
+15:53:18 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:53:18 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+15:53:20 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+15:53:20 INFO  : 'configparams force-mem-access 0' command is executed.
+15:53:20 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_53_17_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_53_17_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+15:53:20 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+15:53:20 INFO  : 'con' command is executed.
+15:53:20 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+15:53:20 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+17:21:22 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+17:23:56 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+17:24:13 INFO  : Disconnected from the channel tcfchan#3.
+17:24:14 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:24:23 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+17:24:23 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+17:24:31 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:24:40 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+17:24:40 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+17:25:26 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:25:26 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+17:25:26 INFO  : 'jtag frequency' command is executed.
+17:25:26 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+17:25:26 INFO  : Context for 'APU' is selected.
+17:25:27 INFO  : System reset is completed.
+17:25:30 INFO  : 'after 3000' command is executed.
+17:25:30 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+17:25:35 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+17:25:35 INFO  : Context for 'APU' is selected.
+17:25:41 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+17:25:41 INFO  : 'configparams force-mem-access 1' command is executed.
+17:25:41 INFO  : Context for 'APU' is selected.
+17:25:41 INFO  : Boot mode is read from the target.
+17:25:41 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:25:41 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+17:25:42 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+17:25:42 INFO  : 'set bp_25_42_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+17:25:43 INFO  : 'con -block -timeout 60' command is executed.
+17:25:43 INFO  : 'bpremove $bp_25_42_fsbl_bp' command is executed.
+17:25:43 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:25:43 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+17:25:44 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+17:25:44 INFO  : 'configparams force-mem-access 0' command is executed.
+17:25:44 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_25_42_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_25_42_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:25:44 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:25:44 INFO  : 'con' command is executed.
+17:25:44 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+17:25:44 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+17:26:55 INFO  : Disconnected from the channel tcfchan#4.
+17:26:56 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+17:26:56 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+17:26:56 INFO  : 'jtag frequency' command is executed.
+17:26:56 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+17:26:56 INFO  : Context for 'APU' is selected.
+17:26:57 INFO  : System reset is completed.
+17:27:00 INFO  : 'after 3000' command is executed.
+17:27:00 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+17:27:05 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+17:27:05 INFO  : Context for 'APU' is selected.
+17:27:11 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+17:27:11 INFO  : 'configparams force-mem-access 1' command is executed.
+17:27:11 INFO  : Context for 'APU' is selected.
+17:27:11 INFO  : Boot mode is read from the target.
+17:27:11 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:27:11 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+17:27:12 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+17:27:12 INFO  : 'set bp_27_12_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+17:27:13 INFO  : 'con -block -timeout 60' command is executed.
+17:27:13 INFO  : 'bpremove $bp_27_12_fsbl_bp' command is executed.
+17:27:13 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:27:13 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+17:27:14 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+17:27:14 INFO  : 'configparams force-mem-access 0' command is executed.
+17:27:14 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_27_12_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_27_12_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+17:27:14 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+17:27:14 INFO  : 'con' command is executed.
+17:27:14 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+17:27:14 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+19:02:47 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:12:11 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:12:25 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:18:59 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:22:22 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:22:30 INFO  : Disconnected from the channel tcfchan#5.
+19:22:31 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+19:22:40 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+----------------End of Script----------------
+
+19:22:40 ERROR : Could not find ARM device on the board for connection 'Local'.
+Check if the target is in:
+1. Split JTAG - No operations are possible with ARM DAP.
+2. Non JTAG bootmode - Bootrom may need time to enable DAP.
+Please try again.
+
+
+Troubleshooting hints:
+1. Check whether board is connected to system properly.
+2. In case of zynq board, check whether Digilent/Xilinx cable switch settings are correct.
+3. If you are using Xilinx Platform Cable USB, ensure that status LED is green.
+19:22:55 INFO  : Connected to target on host '127.0.0.1' and port '3121'.
+19:22:55 INFO  : Jtag cable 'Digilent JTAG-HS1 210512180081' is selected.
+19:22:55 INFO  : 'jtag frequency' command is executed.
+19:22:55 INFO  : Sourcing of 'E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl' is done.
+19:22:55 INFO  : Context for 'APU' is selected.
+19:22:56 INFO  : System reset is completed.
+19:22:59 INFO  : 'after 3000' command is executed.
+19:22:59 INFO  : 'targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}' command is executed.
+19:23:04 INFO  : Device configured successfully with "E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit"
+19:23:04 INFO  : Context for 'APU' is selected.
+19:23:10 INFO  : Hardware design and registers information is loaded from 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa'.
+19:23:10 INFO  : 'configparams force-mem-access 1' command is executed.
+19:23:10 INFO  : Context for 'APU' is selected.
+19:23:10 INFO  : Boot mode is read from the target.
+19:23:10 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+19:23:10 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+19:23:11 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf' is downloaded to processor 'psu_cortexa53_0'.
+19:23:11 INFO  : 'set bp_23_11_fsbl_bp [bpadd -addr &XFsbl_Exit]' command is executed.
+19:23:12 INFO  : 'con -block -timeout 60' command is executed.
+19:23:12 INFO  : 'bpremove $bp_23_11_fsbl_bp' command is executed.
+19:23:12 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+19:23:12 INFO  : Processor reset is completed for 'psu_cortexa53_0'.
+19:23:13 INFO  : The application 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf' is downloaded to processor 'psu_cortexa53_0'.
+19:23:13 INFO  : 'configparams force-mem-access 0' command is executed.
+19:23:13 INFO  : ----------------XSDB Script----------------
+connect -url tcp:127.0.0.1:3121
+source E:/Xilinx/Vitis/2023.2/scripts/vitis/util/zynqmp_utils.tcl
+targets -set -nocase -filter {name =~"APU*"}
+rst -system
+after 3000
+targets -set -filter {jtag_cable_name =~ "Digilent JTAG-HS1 210512180081" && level==0 && jtag_device_ctx=="jsn-JTAG-HS1-210512180081-14710093-0"}
+fpga -file E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+targets -set -nocase -filter {name =~"APU*"}
+loadhw -hw E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/hw/lasercom_pl_total_v0_wrapper.xsa -mem-ranges [list {0x80000000 0xbfffffff} {0x400000000 0x5ffffffff} {0x1000000000 0x7fffffffff}] -regs
+configparams force-mem-access 1
+targets -set -nocase -filter {name =~"APU*"}
+set mode [expr [mrd -value 0xFF5E0200] & 0xf]
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+set bp_23_11_fsbl_bp [bpadd -addr &XFsbl_Exit]
+con -block -timeout 60
+bpremove $bp_23_11_fsbl_bp
+targets -set -nocase -filter {name =~ "*A53*#0"}
+rst -processor
+dow E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+configparams force-mem-access 0
+----------------End of Script----------------
+
+19:23:13 INFO  : Context for processor 'psu_cortexa53_0' is selected.
+19:23:13 INFO  : 'con' command is executed.
+19:23:13 INFO  : ----------------XSDB Script (After Launch)----------------
+targets -set -nocase -filter {name =~ "*A53*#0"}
+con
+----------------End of Script----------------
+
+19:23:13 INFO  : Launch script is exported to file 'E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\lasercom_system\_ide\scripts\debugger_lasercom-default.tcl'
+19:28:25 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+19:28:38 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+19:28:40 INFO  : Bootgen command execution is done.
+19:38:24 INFO  : Disconnected from the channel tcfchan#6.
+19:51:22 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+19:51:23 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+19:51:25 INFO  : Registering command handlers for Vitis TCF services
+19:51:26 INFO  : XSCT server has started successfully.
+19:51:26 INFO  : plnx-install-location is set to ''
+19:51:26 INFO  : Successfully done setting XSCT server connection channel  
+19:51:26 INFO  : Platform repository initialization has completed.
+19:51:30 INFO  : Successfully done setting workspace for the tool. 
+19:51:30 INFO  : Successfully done query RDI_DATADIR 
+22:04:39 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+12:03:59 DEBUG : Logs will be stored at 'E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/IDE.log'.
+12:04:00 INFO  : Launching XSCT server: xsct.bat -n  -interactive E:\FPGA_Code\10G_1km\lasercom_ps_total\lasercom_ps_total_v12\temp_xsdb_launch_script.tcl
+12:04:03 INFO  : Registering command handlers for Vitis TCF services
+12:04:04 INFO  : XSCT server has started successfully.
+12:04:05 INFO  : Platform repository initialization has completed.
+12:04:09 INFO  : plnx-install-location is set to ''
+12:04:09 INFO  : Successfully done setting XSCT server connection channel  
+12:04:09 INFO  : Successfully done query RDI_DATADIR 
+12:04:09 INFO  : Successfully done setting workspace for the tool. 
+12:05:16 INFO  : Checking for BSP changes to sync application flags for project 'lasercom'...
+12:05:47 INFO  : Invoking Bootgen: bootgen -image lasercom_system.bif -arch zynqmp -o E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin -w on
+12:05:48 INFO  : Bootgen command execution is done.

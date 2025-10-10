@@ -1,0 +1,232 @@
+#include "Track.h"
+static XScuGic_Config *GicConfig_Camera;
+XScuGic InterruptController_Camera;
+
+/*功能标志位*/
+u8 COARSE_CAMERA_Mark 	= 0; //是否开启粗相机，1：开启；0：关闭
+u8 FINE_CAMERA_Mark 	= 0; //是否开启精相机，1：开启；0：关闭
+u8 COARSE_TRA_Mark		=0; //是否开启粗跟踪：1：开启；0：关闭
+u8 FINE_TRA_Mark		=0; //是否开启精跟踪：1：开启；0：关闭
+//粗跟踪跟踪中心
+u16 COARSE_CAMERA_TRA_X = 260;
+u16 COARSE_CAMERA_TRA_Y = 301;
+//振镜输出电压
+float fine_camera_out_x = 5;
+float fine_camera_out_y = 5;
+//精跟踪跟踪中心
+u16 FINE_CAMERA_TRA_X = 382;
+u16 FINE_CAMERA_TRA_Y = 222;
+
+//粗跟踪相机光斑质心
+double coarse_camera_facula_x = 0;
+double coarse_camera_facula_y = 0;
+u32 Coaser_camera_x;
+u32 Coaser_camera_y;
+//精跟踪相机光斑质心
+double fine_camera_facula_x = 0;
+double fine_camera_facula_y = 0;
+u32 Fine_camera_x;
+u32 Fine_camera_y;
+
+
+//粗跟踪跟踪参数
+double coarse_camera_Px = 10,coarse_camera_Py = 10;
+double coarse_camera_Ix = 0.01,coarse_camera_Iy = 0.01;
+double coarse_camera_Dx = 0,coarse_camera_Dy = 0;
+//精跟踪跟踪参数
+double fine_camera_Px = 7,fine_camera_Py = 7;
+double fine_camera_Ix = 0,fine_camera_Iy = 0;
+double fine_camera_Dx = 2,fine_camera_Dy = 2;
+
+//粗跟踪计算参数
+double Coarse_PID_Out_X = 0;
+double Coarse_PID_Out_Y = 0;
+
+double Out_Velocity_X = 0;
+double Out_Velocity_Y = 0;
+
+double coarse_camera_facula_x_err = 0;
+double coarse_camera_facula_x_err_last = 0;
+double coarse_camera_facula_x_err_sum = 0;
+double coarse_camera_facula_x_err_d = 0;
+
+double coarse_camera_facula_y_err = 0;
+double coarse_camera_facula_y_err_last = 0;
+double coarse_camera_facula_y_err_sum = 0;
+double coarse_camera_facula_y_err_d = 0;
+
+//精跟踪计算参数
+
+double Fine_PID_Out_X = 0;
+double Fine_PID_Out_Y = 0;
+
+double Out_Voltage_X = 0;
+double Out_Voltage_Y = 0;
+
+double fine_camera_facula_x_err = 0;
+double fine_camera_facula_x_err_last = 0;
+double fine_camera_facula_x_err_sum = 0;
+double fine_camera_facula_x_err_d = 0;
+
+double fine_camera_facula_y_err = 0;
+double fine_camera_facula_y_err_last = 0;
+double fine_camera_facula_y_err_sum = 0;
+double fine_camera_facula_y_err_d = 0;
+
+u16 Speed_Fine = 0;
+u16 Speed_Coarse = 0;
+
+
+int SetUpInterruptSystem(XScuGic *XScuGicInstancePtr)
+{
+
+	/*
+	 * Connect the interrupt controller interrupt handler to the hardware
+	 * interrupt handling logic in the ARM processor.
+	 */
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+				     (Xil_ExceptionHandler) XScuGic_InterruptHandler,
+				     XScuGicInstancePtr);
+
+	/*
+	 * Enable interrupts in the ARM
+	 */
+	Xil_ExceptionEnable();
+	return XST_SUCCESS;
+}
+
+//相机中断配置
+void Camera_Gic_Intc()
+{
+	GicConfig_Camera = XScuGic_LookupConfig(INTC_GIC_ID);
+	XScuGic_CfgInitialize(&InterruptController_Camera, GicConfig_Camera,
+			GicConfig_Camera->CpuBaseAddress);
+	XScuGic_SelfTest(&InterruptController_Camera);
+	SetUpInterruptSystem(&InterruptController_Camera);
+	XScuGic_Connect(&InterruptController_Camera, INTC_FINE_INT_ID,
+					 (Xil_ExceptionHandler)Track_Fine,
+					 (void *)&InterruptController_Camera);
+	XScuGic_Connect(&InterruptController_Camera, INTC_COARSE_INT_ID,
+						 (Xil_ExceptionHandler)Track_Coarse,
+						 (void *)&InterruptController_Camera);
+
+	XScuGic_Enable(&InterruptController_Camera, INTC_FINE_INT_ID);
+	XScuGic_Enable(&InterruptController_Camera, INTC_COARSE_INT_ID);
+}
+
+
+//精跟踪处理函数
+void Track_Fine(void *CallbackRef)
+{
+	if(FINE_CAMERA_Mark == 1) //开启精跟踪相机，获取精跟踪相机质心
+	{
+
+		Read_Fine_Centroid(&Fine_camera_x,&Fine_camera_y);
+		fine_camera_facula_x = (double)(Fine_camera_x)/1024.0;
+  		fine_camera_facula_y = (double)(Fine_camera_y)/1024.0;
+		//计算跟踪误差
+		fine_camera_facula_x_err = fine_camera_facula_x - FINE_CAMERA_TRA_X;
+		fine_camera_facula_y_err = fine_camera_facula_y - FINE_CAMERA_TRA_Y;
+		if(FINE_TRA_Mark == 1) //开启精跟踪
+		{
+			//计算误差变化率
+			fine_camera_facula_x_err_d = fine_camera_facula_x - fine_camera_facula_x_err_last;
+			fine_camera_facula_y_err_d = fine_camera_facula_y - fine_camera_facula_y_err_last;
+			//计算误差累积量
+			fine_camera_facula_x_err_sum += fine_camera_facula_x_err;
+			fine_camera_facula_y_err_sum += fine_camera_facula_y_err;
+			//计算PID
+			Fine_PID_Out_X = -fine_camera_Px*fine_camera_facula_x_err - 0.01*fine_camera_Ix*fine_camera_facula_x_err_sum
+				 	 	  + 0.01*fine_camera_Dx*fine_camera_facula_x_err_d;
+			Fine_PID_Out_Y = -fine_camera_Py*fine_camera_facula_y_err - 0.01*fine_camera_Iy*fine_camera_facula_y_err_sum
+							  + 0.01*fine_camera_Dy*fine_camera_facula_y_err_d;
+			//转化为电压
+			Out_Voltage_X = Fine_PID_Out_X * 0.001;
+			Out_Voltage_Y = Fine_PID_Out_Y * 0.001;
+			//输出电压
+			fine_camera_out_x += Out_Voltage_X;
+			fine_camera_out_y += Out_Voltage_Y;
+
+			if(fine_camera_out_x > 10)
+				fine_camera_out_x = 10;
+			else if(fine_camera_out_x < 0)
+				fine_camera_out_x = 0;
+
+			if(fine_camera_out_y > 10)
+				fine_camera_out_y = 10;
+			else if(fine_camera_out_y < 0)
+				fine_camera_out_y = 0;
+
+			Set_PZT_X_Out(fine_camera_out_x);
+			Set_PZT_Y_Out(fine_camera_out_y);
+			//更新误差参数
+			fine_camera_facula_x_err_last = fine_camera_facula_x_err;
+			fine_camera_facula_y_err_last = fine_camera_facula_y_err;
+
+		}
+		else //清零跟踪误差参数
+		{
+			fine_camera_facula_x_err_last = 0;
+			fine_camera_facula_y_err_last = 0;
+			fine_camera_facula_x_err_sum = 0;
+			fine_camera_facula_y_err_sum = 0;
+
+		}
+		Speed_Fine++;
+		if(Speed_Fine > 10000)
+
+	}
+	else
+	{
+		Speed_Fine = 0;
+	}
+}
+
+//粗跟踪处理函数
+void Track_Coarse(void *CallbackRef)
+{
+	if(COARSE_CAMERA_Mark == 1) //开启粗跟踪相机，获取粗跟踪相机质心
+	{
+		Read_Coaser_Centroid(&Coaser_camera_x,&Coaser_camera_y);
+		coarse_camera_facula_x = (double)(Coaser_camera_x)/1024.0;
+		coarse_camera_facula_y = (double)(Coaser_camera_y)/1024.0;
+		//计算跟踪误差
+		coarse_camera_facula_x_err = coarse_camera_facula_x - COARSE_CAMERA_TRA_X;
+		coarse_camera_facula_y_err = coarse_camera_facula_y - COARSE_CAMERA_TRA_Y;
+		if(COARSE_TRA_Mark == 1) //开启粗跟踪
+		{
+			//计算误差变化率
+			coarse_camera_facula_x_err_d = coarse_camera_facula_x_err - coarse_camera_facula_x_err_last;
+			coarse_camera_facula_y_err_d = coarse_camera_facula_y_err - coarse_camera_facula_y_err_last;
+			//计算误差累积量
+			coarse_camera_facula_x_err_sum += coarse_camera_facula_x_err;
+			coarse_camera_facula_y_err_sum += coarse_camera_facula_y_err;
+			//计算PID
+			Coarse_PID_Out_X = -1*coarse_camera_Px*coarse_camera_facula_x_err - coarse_camera_Ix*coarse_camera_facula_x_err_sum
+				 	 	 	 + coarse_camera_Dx*coarse_camera_facula_x_err_d;
+			Coarse_PID_Out_Y = -1*coarse_camera_Py*coarse_camera_facula_y_err - coarse_camera_Iy*coarse_camera_facula_y_err_sum
+								 + coarse_camera_Dy*coarse_camera_facula_y_err_d;
+			//转化为速度
+			Out_Velocity_X = Coarse_PID_Out_X * 0.001;
+			Out_Velocity_Y = Coarse_PID_Out_Y * 0.001;
+			//输出速度
+			Elmo_Set_Speed(MOTO_X_ID,Out_Velocity_X);
+			Elmo_Set_Speed(MOTO_Y_ID,Out_Velocity_Y);
+			//更新误差
+			coarse_camera_facula_x_err_last = coarse_camera_facula_x_err;
+			coarse_camera_facula_y_err_last = coarse_camera_facula_y_err;
+		}
+		else //清零跟踪误差参数
+		{
+			coarse_camera_facula_x_err_sum = 0;
+			coarse_camera_facula_y_err_sum = 0;
+			coarse_camera_facula_x_err_last = 0;
+			coarse_camera_facula_y_err_last = 0;
+		}
+		Speed_Coarse++;
+	}
+	else
+	{
+		Speed_Coarse = 0;
+	}
+}

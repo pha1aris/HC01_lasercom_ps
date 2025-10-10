@@ -1,0 +1,20 @@
+Nothing to build in platform 'lasercom_pl_total_v0_wrapper'
+
+12:05:23 **** Incremental Build of configuration Debug for project lasercom ****
+make all 
+'Building file: ../src/Track.cpp'
+'Invoking: ARM v8 g++ compiler'
+aarch64-none-elf-g++ -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/Track.o" -IE:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/standalone_psu_cortexa53_0/bspinclude/include -MMD -MP -MF"src/Track.d" -MT"src/Track.o" -o "src/Track.o" "../src/Track.cpp"
+'Finished building: ../src/Track.cpp'
+' '
+'Building target: lasercom.elf'
+'Invoking: ARM v8 g++ linker'
+aarch64-none-elf-g++ -Wl,-T -Wl,../src/lscript.ld -LE:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/standalone_psu_cortexa53_0/bsplib/lib -o "lasercom.elf"  ./src/Camera_Control.o ./src/Camera_Set.o ./src/DA.o ./src/EDFA_Control.o ./src/Elmo_Can.o ./src/Intr_Config.o ./src/Location_Compute.o ./src/Track.o ./src/Yesense.o ./src/analysis_data.o ./src/centroid.o ./src/datalink.o ./src/main.o ./src/uart16550.o ./src/uart_dw.o   -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group
+'Finished building target: lasercom.elf'
+' '
+'Invoking: ARM v8 Print Size'
+aarch64-none-elf-size lasercom.elf  |tee "lasercom.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 104836	   5920	  28540	 139296	  22020	lasercom.elf
+'Finished building: lasercom.elf.size'
+' '

@@ -1,0 +1,12 @@
+/* C:/Users/lei/AppData/Local/Temp/bootgen_lasercom_system10916814961123172667/sd_card_temp/boot.bif */
+/* Command to create bitstream .bin file:       */
+/*   bootgen -image <bif_file> -split bin -w    */
+/* Command to create BOOT.BIN file:             */
+/*   bootgen -arch zynqmp -image <bif_file> -w -o i BOOT.BIN */
+/*lasercom_pl_total_v0_wrapper*/
+the_ROM_image:
+{
+ [bootloader, destination_cpu=a53-0] E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf
+ [destination_device=pl] E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+ [destination_cpu=a53-0, exception_level=el-3] E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf
+}

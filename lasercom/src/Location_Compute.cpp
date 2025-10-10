@@ -1,0 +1,60 @@
+#include "Location_Compute.h"
+
+#define ER 6370856 //地球半径
+#define RAD 180/3.1415926 //角度转弧度
+
+double COU_WZ ;   //方位角，航姿零角偏差
+double PIT_WY ;
+
+/*
+函数功能：计算两点之间的俯仰角和方位角（S点相对于M点）
+输入参数：log_M(M点经度)、lat_M(M点维度)、ele_M(M点海拔)
+		  log_S(S点经度)、lat_S(S点维度)、ele_S(S点海拔)
+		  cou_M(M点航向角)、pit_M(M点俯仰角)、rol_M(M点翻滚角)
+输出参数：cou_MS(s点相对于M点方位角)、pit_MS(s点相对于M点俯仰角)
+*/
+void Initial_Point(double log_M,double lat_M,double ele_M,
+				   double log_S,double lat_S,double ele_S,
+				   double cou_M,double pit_M,double rol_M,
+				   double *cou_MS,double *pit_MS)
+{
+	double Cos_Ms;  //MS弧余弦值
+	double Sin_Ms;	//MS弧正弦值
+	double Sin_cou;
+	double Len_Ms;	//MS之间的距离
+	double Len_Ms_2;	//MS之间的距离的平方
+	double Sin_pit;
+
+	Cos_Ms = cos((90 - lat_M) / RAD)*cos((90 - lat_S) / RAD) + sin((90 - lat_M) / RAD)*sin((90 - lat_S) / RAD)*cos((log_S - log_M) / RAD);
+	Sin_Ms = sqrt(1 - Cos_Ms*Cos_Ms);
+	Sin_cou = sin((90 - lat_S) / RAD)*sin((log_S - log_M) / RAD)/ Sin_Ms;
+
+	*cou_MS = asin(Sin_cou)*RAD; //方位角
+
+	Len_Ms_2 = (ER + ele_M)*(ER + ele_M) + (ER + ele_S)*(ER + ele_S) - 2 * (ER + ele_M)*(ER + ele_S)*Cos_Ms;
+	Len_Ms = sqrt(Len_Ms_2);
+
+
+	Sin_pit = (ER + ele_S)*Sin_Ms / Len_Ms;
+	*pit_MS = asin(Sin_pit)*RAD; //俯仰角
+	//确定俯仰角度符号,向下为正
+	if (ele_M > ele_S)
+		*pit_MS = *pit_MS;
+	else
+		*pit_MS = -*pit_MS;
+
+	*pit_MS = *pit_MS - pit_M ;//最终俯仰角
+
+	*pit_MS = -180 - *pit_MS ;
+
+	if(*pit_MS < -90)
+	{
+		*pit_MS = *pit_MS + 180;
+	}
+
+	*cou_MS = *cou_MS + cou_M ;//最终方位角
+
+	//*cou_MS = *cou_MS + 180;
+
+
+}

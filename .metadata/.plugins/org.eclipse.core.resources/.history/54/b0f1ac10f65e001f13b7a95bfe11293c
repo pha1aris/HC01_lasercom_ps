@@ -1,0 +1,375 @@
+#include "Camera_Set.h"
+
+XGpio AxiGpio_Sel;
+XGpio AxiGpio_En;
+XGpio AxiGpio_Addr;
+XGpio AxiGpio_Data;
+XGpio AxiGpio_Rata;
+
+/*
+ * 精跟踪相机默认参数
+ */
+//u32 Fine_ROI_Width 		= 	128;
+//u32 Fine_ROI_Height		=	128;
+//u32 Fine_ROI_Width_Par	=	256;
+//u32 Fine_ROI_Height_Par	=	176;
+//u32 Fine_Camera_Extime 	=	200;
+
+u32 Fine_ROI_Width 		= 	640;
+u32 Fine_ROI_Height		=	480;
+u32 Fine_ROI_Width_Par	=	0;
+u32 Fine_ROI_Height_Par	=	0;
+u32 Fine_Camera_Extime 	=	200;
+
+/*
+ * 粗跟踪相机默认参数
+ */
+u32 Coarse_ROI_Width 		= 	640;
+u32 Coarse_ROI_Height		=	480;
+u32 Coarse_ROI_Width_Par	=	0;
+u32 Coarse_ROI_Height_Par	=	0;
+u32 Coarse_Camera_Extime 	=	200;
+
+
+//初始化GPIO模块
+void Camera_Set_Gpio_Config()
+{
+	XGpio_Initialize(&AxiGpio_Sel, GPIO_CAM_SEL_ID);
+	XGpio_Initialize(&AxiGpio_En, GPIO_CAM_EN_ID);
+	XGpio_Initialize(&AxiGpio_Addr, GPIO_CAM_ADDR_ID);
+	XGpio_Initialize(&AxiGpio_Data, GPIO_CAM_DATA_ID);
+	XGpio_Initialize(&AxiGpio_Rata, GPIO_CAM_RATA_ID);
+
+}
+//读取相机帧率
+void Camera_Rata_Read(u32 *Fine_Coaser_Rata,u32 *Coarse_Coaser_Rata)
+{
+	*Fine_Coaser_Rata 	= XGpio_DiscreteRead(&AxiGpio_Rata, FINE_CAMERA);
+	*Coarse_Coaser_Rata = XGpio_DiscreteRead(&AxiGpio_Rata, COARSE_CAMERA);
+}
+
+//配置精跟踪曝光时间
+void Fine_Camera_ExSet(u32 ExData)
+{
+	XGpio_DiscreteWrite(&AxiGpio_Sel, FINE_CAMERA, 1); //设置片选，可以配置相机
+	XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_EX_ADDR); //写地址
+	XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ExData); //写数据
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+	XGpio_DiscreteWrite(&AxiGpio_Sel, FINE_CAMERA, 0); //设置片选，停止配置相机
+
+	Fine_Camera_Extime = ExData;
+}
+//配置粗跟踪曝光时间
+void Coarse_Camera_ExSet(u32 ExData)
+{
+	XGpio_DiscreteWrite(&AxiGpio_Sel, COARSE_CAMERA, 1); //设置片选，可以配置相机
+	XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_EX_ADDR); //写地址
+	XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ExData); //写数据
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+	usleep(1000);
+	XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+	XGpio_DiscreteWrite(&AxiGpio_Sel, COARSE_CAMERA, 0); //设置片选，停止配置相机
+
+	Coarse_Camera_Extime = ExData;
+}
+
+//配置精跟踪相机开窗大小与偏置
+/*
+ * 输入参数：
+ * X_Start：X轴开窗偏置
+ * X_Size：X轴开窗大小
+ * Y_Start：Y轴开窗偏置
+ * Y_Size：Y轴开窗大小
+ */
+
+void Fine_Camera_ROI_Set(u32 X_Start,u32 X_Size,u32 Y_Start,u32 Y_Size)
+{
+	u32 ROI_X_Start;
+	u32 ROI_X_End;
+	u32 ROI_X_Set;
+
+	u32 ROI_Y_Start;
+	u32 ROI_Y_End;
+
+
+	XGpio_DiscreteWrite(&AxiGpio_Sel, FINE_CAMERA, 1); //设置片选，可以配置相机
+	XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+	usleep(1);
+
+	//判断X轴数据是否合理
+	if((X_Start >= 0) && (X_Start + X_Size <= 640) && (X_Start%8 == 0) && (X_Size%8 == 0)) //X轴设置合理
+	{
+
+		//更新参数
+		Fine_ROI_Width = X_Size;
+		Fine_ROI_Width_Par = X_Start;
+
+		ROI_X_Start = X_Start / 8;
+		X_Size = X_Size / 8;
+		ROI_X_End = ROI_X_Start + X_Size - 1;
+		ROI_X_Set = (ROI_X_End << 8) + ROI_X_Start;
+
+
+
+		//退出RUNNING状态
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, 0); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+		sleep(1);
+
+		//设置X轴开窗位置
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_X); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_X_Set); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+		usleep(1000);
+
+//		//设置AECX轴开窗位置
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_AEC_X); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_X_Set); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+
+		sleep(1);
+		//进入RUNNING模式
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, 1025); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+
+
+
+	}
+	//判断Y轴数据是否合理
+	if((Y_Start >= 0) && (Y_Start + Y_Size <= 480))
+	{
+		//更新参数
+		Fine_ROI_Height		=	Y_Size;
+		Fine_ROI_Height_Par	=	Y_Start;
+
+		ROI_Y_Start = Y_Start;
+		ROI_Y_End = Y_Start + Y_Size - 1;
+
+		//退出RUNNING状态
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, 0); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+		sleep(1);
+
+		//写Y轴开始寄存器
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_Y_START); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_Y_Start); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+		usleep(1000);
+//		//写AECY轴开始寄存器
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_AEC_Y_START); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_Y_Start); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+		//写Y轴结束寄存器
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_Y_END); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_Y_End); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+		usleep(1000);
+//		//写AECY轴结束寄存器
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_AEC_Y_END); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, ROI_Y_End); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+		sleep(1);
+		//进入RUNNING模式
+		XGpio_DiscreteWrite(&AxiGpio_Addr, FINE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, FINE_CAMERA, 1025); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, FINE_CAMERA, 0); //停止使能
+
+	}
+
+
+	XGpio_DiscreteWrite(&AxiGpio_Sel, FINE_CAMERA, 0); //设置片选，停止配置相机
+
+}
+
+//配置粗跟踪相机开窗大小与偏置
+/*
+ * 输入参数：
+ * X_Start：X轴开窗偏置
+ * X_Size：X轴开窗大小
+ * Y_Start：Y轴开窗偏置
+ * Y_Size：Y轴开窗大小
+ */
+
+void Coarse_Camera_ROI_Set(u32 X_Start,u32 X_Size,u32 Y_Start,u32 Y_Size)
+{
+	u32 ROI_X_Start;
+	u32 ROI_X_End;
+	u32 ROI_X_Set;
+
+	u32 ROI_Y_Start;
+	u32 ROI_Y_End;
+
+
+	XGpio_DiscreteWrite(&AxiGpio_Sel, COARSE_CAMERA, 1); //设置片选，可以配置相机
+	XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+	usleep(10);
+
+	//判断X轴数据是否合理
+	if((X_Start >= 0) && (X_Start + X_Size <= 640) && (X_Start%8 == 0) && (X_Size%8 == 0)) //X轴设置合理
+	{
+
+		//更新参数
+		Coarse_ROI_Width = X_Size;
+		Coarse_ROI_Width_Par = X_Start;
+
+		ROI_X_Start = X_Start / 8;
+		X_Size = X_Size / 8;
+		ROI_X_End = ROI_X_Start + X_Size - 1;
+		ROI_X_Set = (ROI_X_End << 8) + ROI_X_Start;
+
+
+
+		//退出RUNNING状态
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, 0); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+		sleep(1);
+
+		//设置X轴开窗位置
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_X); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_X_Set); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+		usleep(1000);
+//		//设置AECX轴开窗位置
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_AEC_X); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_X_Set); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+		sleep(1);
+		//进入RUNNING模式
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, 1025); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+
+
+	}
+	//判断Y轴数据是否合理
+	if((Y_Start >= 0) && (Y_Start + Y_Size <= 480))
+	{
+
+		//更新参数
+		Coarse_ROI_Height		=	Y_Size;
+		Coarse_ROI_Height_Par	=	Y_Start;
+
+		ROI_Y_Start = Y_Start;
+		ROI_Y_End = Y_Start + Y_Size - 1;
+
+		//退出RUNNING状态
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, 0); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+		sleep(1);
+
+		//写Y轴开始寄存器
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_Y_START); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_Y_Start); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+		usleep(1000);
+//		//写AECY轴开始寄存器
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_AEC_Y_START); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_Y_Start); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+		//写Y轴结束寄存器
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_Y_END); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_Y_End); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+		usleep(1000);
+//		//写AECY轴结束寄存器
+//		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_AEC_Y_END); //写地址
+//		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, ROI_Y_End); //写数据
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+//		usleep(10);
+//		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+//		usleep(10);
+
+		sleep(1);
+		//进入RUNNING模式
+		XGpio_DiscreteWrite(&AxiGpio_Addr, COARSE_CAMERA, CAMERA_CONFIG_ADDR); //写地址
+		XGpio_DiscreteWrite(&AxiGpio_Data, COARSE_CAMERA, 1025); //写数据
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 1); //使能
+		usleep(1000);
+		XGpio_DiscreteWrite(&AxiGpio_En, COARSE_CAMERA, 0); //停止使能
+
+	}
+
+
+	XGpio_DiscreteWrite(&AxiGpio_Sel, COARSE_CAMERA, 0); //设置片选，停止配置相机
+
+}
+

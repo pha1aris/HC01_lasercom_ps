@@ -1,0 +1,10 @@
+16:25:31 **** Build of configuration Debug for project lasercom_system ****
+make all 
+Generating bif file for the system project
+generate_system_bif.bat 13509 E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm standalone_psu_cortexa53_0 E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/Debug/system.bif
+sdcard_gen --xpfm E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm --sys_config lasercom_pl_total_v0_wrapper --bif E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/Debug/system.bif --bitstream E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit --elf E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/Debug/lasercom.elf,psu_cortexa53_0
+creating BOOT.BIN using E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom/_ide/bitstream/lasercom_pl_total_v0_wrapper.bit
+Running E:/Xilinx/Vitis/2023.2/bin/bootgen -arch zynqmp -image E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/Debug/sd_card_temp/boot.bif -w -o i BOOT.BIN
+
+16:25:39 Build Finished (took 7s.836ms)
+

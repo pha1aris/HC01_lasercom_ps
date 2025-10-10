@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="lasercom_system-imgFile" value="E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/BOOT.bin"/>
+	<item key="lasercom_system-offSet" value=""/>
+	<item key="lasercom_system-initFile" value="E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/lasercom_pl_total_v0_wrapper/boot/fsbl.elf"/>
+	<item key="lasercom_system-flashType" value="qspi-x4-single"/>
+	<item key="lasercom_system-verifyFlash" value="false"/>
+	<item key="lasercom_system-blankCheck" value="false"/>
+	<item key="lasercom_system-device" value="Auto Detect"/>
+	<item key="lasercom_system-target" value="Local"/>
+	<item key="programflash.hwplatform" value="lasercom_system"/>
+</section>

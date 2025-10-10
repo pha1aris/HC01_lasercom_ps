@@ -1,0 +1,797 @@
+#include "Elmo_Can.h"
+#include "EDFA_Control.h"
+#include "uart_dw.h"
+#include "Dw_Data_Define.h"
+#include "centroid.h"
+#include "DA.h"
+#include "Dw_Data_Define.h"
+#include "Intr_Config.h"
+#include "Track.h"
+#include "Camera_Control.h"
+#include "datalink.h"
+#include "Location_Compute.h"
+#include "Camera_Set.h"
+#include "Location_Compute.h"
+
+//光源、EDFA与数传电台
+extern XUartNs550 *EDFA_FRONTLOAD;
+extern XUartNs550 *EDFA_AMPLIFIER;
+extern XUartNs550 *EDFA_LIGHT;
+extern XUartNs550 *DATA_RADIO;
+//光源数据
+extern u16 Read_LIGHT_Power;
+extern u8	Read_LIGHT_Data_Valid; //数据有效信号
+extern u8 *ReceivedBuffer_LIGHT;
+//功放EDFA数据
+extern u8 *ReceivedBuffer_AMPLIFIER;
+extern u16 Read_AMPLIFIER_Power;
+extern u16 Read_PD_Power;
+extern u16 SIGNAL_LIGHT_IN_Power;
+extern u8	Read_AMPLIFIER_Data_Valid; //数据有效信号
+//前方EDFA数据
+extern u8 *ReceivedBuffer_FRONTLOAD;
+extern u16 Read_FRONTLOAD_Power;
+extern u8	Read_FRONTLOAD_Data_Valid; //数据有效信号
+//数传电台数据
+extern u8 *ReceivedBuffer_DATA_RADIO ;
+extern u8 Read_DATA_RADIO_Data_Valid; //数据有效信号
+
+
+
+u16 Out_data;
+
+
+extern u8 Dw_Read_Data[100];  //迪文屏接收数据数组
+extern u8 Dw_Read_Data_valid;
+
+//电机位置
+extern float Motor_Y_Position;
+extern float Motor_X_Position;
+//航姿数据
+extern protocol_info_t g_output_info;
+
+/*功能标志位*/
+extern u8 COARSE_CAMERA_Mark; //是否开启粗相机，1：开启；0：关闭
+extern u8 FINE_CAMERA_Mark ; //是否开启精相机，1：开启；0：关闭
+extern u8 COARSE_TRA_Mark	; //是否开启粗跟踪：1：开启；0：关闭
+extern u8 FINE_TRA_Mark	; //是否开启精跟踪：1：开启；0：关闭
+u8 STAB_Mark			=0; //是否开始稳定：1：开始；0：关闭
+
+//主程序抽样
+u32 Pro_Cnt = 0;
+u32 EDFA_Cnt = 0;
+
+//振镜输出电压
+extern float fine_camera_out_x;
+extern float fine_camera_out_y;
+
+//粗跟踪跟踪阈值
+u16 COARSE_CAMERA_THR = 200;
+//粗跟踪跟踪中心
+extern u16 COARSE_CAMERA_TRA_X ;
+extern u16 COARSE_CAMERA_TRA_Y ;
+//精跟踪跟踪阈值
+u16 FINE_CAMERA_THR = 200;
+//精跟踪跟踪中心
+extern u16 FINE_CAMERA_TRA_X;
+extern u16 FINE_CAMERA_TRA_Y;
+//粗跟踪跟踪参数
+extern double coarse_camera_Px ;
+extern double coarse_camera_Py ;
+extern double coarse_camera_Ix ;
+extern double coarse_camera_Iy ;
+extern double coarse_camera_Dx ;
+extern double coarse_camera_Dy ;
+//精跟踪跟踪参数
+extern double fine_camera_Px ;
+extern double fine_camera_Py ;
+extern double fine_camera_Ix ;
+extern double fine_camera_Iy ;
+extern double fine_camera_Dx ;
+extern double fine_camera_Dy ;
+//粗跟踪相机光斑质心
+extern double coarse_camera_facula_x;
+extern double coarse_camera_facula_y;
+extern double coarse_camera_facula_x_err;
+extern double coarse_camera_facula_y_err;
+//精跟踪相机光斑质心
+extern double fine_camera_facula_x;
+extern double fine_camera_facula_y;
+extern double fine_camera_facula_x_err;
+extern double fine_camera_facula_y_err;
+
+//开始扫描标志位
+u8 Start_Scan_Mark = 0;
+//扫描步数与间隔
+double Scan_Step = 0.1;
+u16 Scan_Num = 20;
+//扫描起始坐标
+double Scan_X_Satrt;
+double Scan_Y_Satrt;
+
+double Scan_X_Point;
+double Scan_Y_Point;
+//扫描计数
+u16 Scan_X_Cnt = 0;
+u16 Scan_Y_Cnt = 0;
+
+
+//初始指向位置
+double Start_Point_Position_x;
+double Start_Point_Position_y;
+//初始指向标志位
+u8 Start_Point_Mark = 0;
+//偏转角度
+extern double COU_WZ;   //方位角，航姿零角偏差
+extern double PIT_WY;
+//对方经纬高数据
+double Peer_latitude;
+double Peer_longtidue;
+double Peer_altidue;
+
+//相机帧率
+u32 Fine_Rata;
+u32 Coarse_Rata;
+
+/*
+ * 精跟踪相机默认参数
+ */
+extern u32 Fine_ROI_Width 		;
+extern u32 Fine_ROI_Height		;
+extern u32 Fine_ROI_Width_Par	;
+extern u32 Fine_ROI_Height_Par	;
+extern u32 Fine_Camera_Extime 	;
+
+/*
+ * 粗跟踪相机默认参数
+ */
+extern u32 Coarse_ROI_Width 		;
+extern u32 Coarse_ROI_Height		;
+extern u32 Coarse_ROI_Width_Par		;
+extern u32 Coarse_ROI_Height_Par	;
+extern u32 Coarse_Camera_Extime 	;
+
+
+
+
+//迪文屏初始化
+void Dw_Systems_Config(void);
+
+//迪文屏控制程序
+void Dw_Systems_Control(void);
+
+//抽样工作函数
+void Sample_Work(u32 Work_cnt);
+
+extern u16 Speed_Fine;
+extern u16 Speed_Coarse;
+
+ int main()
+ {
+	 /*初始化模块*/
+
+	 Can_Config();//初始化CAN
+	 Uart16550_InitProc();//初始化uart16550
+	 Dw_Uart_Config();//初始化迪文屏串口
+	 Centroid_Gpio_Config();//初始化质心GPIO
+	 DA_Gpio_Config();//初始化DA GPIO
+	 Sdi_Gpio_Config();//初始化SDI选择
+	 uart_init(&Uart_Ps);//初始化航姿模块
+	 All_Intr_Config(); //中断初始化
+	 Camera_Set_Gpio_Config();//设置相机GPIO初始化
+	 Elmo_Config();   //ELmo配置
+
+
+	 /*设置默认数据*/
+	 Set_Coaser_Threshold(COARSE_CAMERA_THR); //设置粗相机阈值
+	 Set_Fine_Threshold(FINE_CAMERA_THR);	//设置精相机阈值
+	 //设置相机开窗与曝光
+	 Fine_Camera_ExSet(Fine_Camera_Extime);
+	 //Fine_Camera_ROI_Set(Fine_ROI_Width_Par,Fine_ROI_Width,Fine_ROI_Height_Par,Fine_ROI_Height);
+	 Coarse_Camera_ExSet(Coarse_Camera_Extime);
+	 //Coarse_Camera_ROI_Set(Coarse_ROI_Width_Par,Coarse_ROI_Width,Coarse_ROI_Height_Par,Coarse_ROI_Height);
+
+	 Set_DA_Out(fine_camera_out_x,fine_camera_out_y);//设置DA默认输出
+	 Dw_Systems_Config();
+	 EDFA_ReadAll(EDFA_AMPLIFIER);
+	 EDFA_ReadAll(EDFA_LIGHT);
+	 Sdi_Show_Choice(0);
+	 sleep(1);
+	 while(1)
+	 {
+		 //usleep(100);
+
+		 Dw_Systems_Control();  //获取迪文屏指令
+		 Pro_Cnt++;
+		 Sample_Work(Pro_Cnt); //迪文屏数据显示
+		 if(Pro_Cnt > 100)
+			 Pro_Cnt = 0;
+		 //初始指向代码
+		 if(Start_Point_Mark == 1)
+		 {
+			 if((Motor_X_Position > -0.05) && (Motor_X_Position < 0.05)
+					 && (Motor_Y_Position > -0.05) &&(Motor_Y_Position < 0.05)) //电机为0，读取当前航姿信息
+			 {
+				 sleep(1);
+				 COU_WZ = g_output_info.attitude.yaw;
+				 PIT_WY = g_output_info.attitude.roll;
+				 Initial_Point(g_output_info.location.longtidue,g_output_info.location.latitude,g_output_info.location.altidue,
+						 	 	Peer_longtidue,Peer_latitude,Peer_altidue,
+						 //114.3508882411,30.5296520593,70,
+								COU_WZ,PIT_WY,0,
+								0,PIT_WY,0,
+								&Start_Point_Position_x,&Start_Point_Position_y);//位置解算函数
+
+				 Elmo_Set_Position(MOTO_X_ID,Start_Point_Position_x); //初始指向X
+				 Elmo_Set_Position(MOTO_Y_ID,Start_Point_Position_y); //初始指向y
+				 Start_Point_Mark = 0;
+			 }
+		 }
+		 //扫描功能代码
+		 if(Start_Scan_Mark == 1) //开始扫描
+		 {
+			 Elmo_Set_Position(MOTO_X_ID,Scan_X_Point); //初始指向X
+			 Elmo_Set_Position(MOTO_Y_ID,Scan_Y_Point); //初始指向y
+			 usleep(20000); //延时20ms
+			 if((coarse_camera_facula_x != 0) && (coarse_camera_facula_y != 0)) //粗跟踪相机捕获到目标，停止扫描
+			 {
+				 Start_Scan_Mark = 0;
+			 }
+			 else //没有扫描到目标，跟新指向坐标
+			 {
+				 Scan_X_Cnt = Scan_X_Cnt + 1;
+				 if(Scan_X_Cnt == Scan_Num) //X轴扫描一行，Y移动下一行
+				 {
+					 Scan_X_Cnt = 0;
+					 Scan_Y_Cnt = Scan_Y_Cnt + 1;
+				 }
+				 if(Scan_Y_Cnt == Scan_Num) //扫描结束
+				 {
+					 Start_Scan_Mark = 0;
+				 }
+				 else //跟新扫描坐标
+				 {
+					Scan_X_Point = Scan_X_Satrt + Scan_X_Cnt*Scan_Step;
+					Scan_Y_Point = Scan_Y_Satrt + Scan_Y_Cnt*Scan_Step;
+				 }
+			 }
+		 }
+
+
+	 }
+
+ }
+
+
+ /*
+  * 程序抽样运行
+  * */
+
+ void Sample_Work(u32 Work_cnt)
+ {
+	 int32_t Peer_latitude_Temp;
+	 int32_t Peer_longtidue_Temp;
+	 int32_t Peer_altidue_Temp;
+
+	 if(Work_cnt > 100) //1ms查询一次
+	 {
+////		 //测试
+//		 Dw_Data_Write(PZT_V_X_ADDR,Speed_Test,4);
+//		 usleep(5);
+		 //粗跟踪相机光斑位置
+		 Dw_Data_Write(COARSE_CAMERA_X_ADDR,coarse_camera_facula_x*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(COARSE_CAMERA_Y_ADDR,coarse_camera_facula_y*1000,4);
+		 usleep(20);
+		 Dw_Coarse_Spot_P(coarse_camera_facula_x,coarse_camera_facula_y);
+		 usleep(20);
+		 Dw_Data_Write(COARSE_CAMERA_ERR_X_ADDR,coarse_camera_facula_x_err*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(COARSE_CAMERA_ERR_Y_ADDR,coarse_camera_facula_y_err*1000,4);
+		 usleep(20);
+		 //精跟踪相机光斑位置
+		 Dw_Data_Write(FINE_CAMERA_X_ADDR,fine_camera_facula_x*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(FINE_CAMERA_Y_ADDR,fine_camera_facula_y*1000,4);
+		 usleep(20);
+		 Dw_Fine_Spot_P(fine_camera_facula_x,fine_camera_facula_y);
+		 usleep(20);
+		 Dw_Data_Write(FINE_CAMERA_ERR_X_ADDR,fine_camera_facula_x_err*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(FINE_CAMERA_ERR_Y_ADDR,fine_camera_facula_y_err*1000,4);
+		 usleep(20);
+		 //显示DA输出电压值
+		 Dw_Data_Write(PZT_V_X_ADDR,fine_camera_out_x*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(PZT_V_Y_ADDR,fine_camera_out_y*1000,4);
+		 usleep(20);
+		 //显示电机位置
+		 Dw_Data_Write(MOTOR_P_X_ADDR,Motor_X_Position*1000,4);
+		 usleep(20);
+		 Dw_Data_Write(MOTOR_P_Y_ADDR,Motor_Y_Position*1000,4); //显示位置
+		 usleep(20);
+		 //获取相机帧率
+		// Camera_Rata_Read(&Fine_Rata,&Coarse_Rata);
+	 	if(Yesense_data_valid == 1) //显示航姿信息
+	 	{
+	 		//显示航姿数据
+	 		analysis_data(Yesense_buffer, Yesense_data_num, &g_output_info);
+	 		Dw_Data_Write(ATT_WX_ADDR,g_output_info.attitude.pitch*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(ATT_WY_ADDR,g_output_info.attitude.roll*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(ATT_WZ_ADDR,g_output_info.attitude.yaw*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(ATT_DIM_ADDR,g_output_info.location.latitude*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(ATT_LON_ADDR,g_output_info.location.longtidue*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(ATT_H_ADDR,g_output_info.location.altidue*1000,4);
+	 		usleep(20);
+	 		Yesense_data_valid = 0;
+	 		//数传电台发送数据
+	 		Uartplsend_datalink(DATA_RADIO,g_output_info.location.latitude,g_output_info.location.longtidue,g_output_info.location.altidue);
+
+	 	}
+	 	if(Read_AMPLIFIER_Data_Valid == 1) //显示功放EDFA信息
+	 	{
+ 	 		if(*(ReceivedBuffer_AMPLIFIER+8) == 0x80)
+	 		{
+	 			Read_AMPLIFIER_Power = (((u16)*(ReceivedBuffer_AMPLIFIER+23)) << 8) + (*(ReceivedBuffer_AMPLIFIER+24)); //功放输出功率
+	 			Read_PD_Power = (((u16)*(ReceivedBuffer_AMPLIFIER+59)) << 8) + (*(ReceivedBuffer_AMPLIFIER+60));		//PD输入功率检测
+	 			SIGNAL_LIGHT_IN_Power = (((u16)*(ReceivedBuffer_AMPLIFIER+18)) << 8) + (*(ReceivedBuffer_AMPLIFIER+19));        //信号输入功率
+	 		}
+
+	 		Dw_Data_Write(SIGNAL_BEAM_OUT_DATA_ADDR,(int16_t)Read_AMPLIFIER_Power,4);
+	 		usleep(20);
+	 		Dw_Data_Write(PD_IN_ADDR,(int16_t)Read_PD_Power,4);
+	 		usleep(20);
+	 		Dw_Data_Write(SIGNAL_LIGHT_IN_ADDR,(int16_t)SIGNAL_LIGHT_IN_Power,4);
+	 		usleep(20);
+	 		Read_AMPLIFIER_Data_Valid = 0;
+	 		EDFA_ReadAll(EDFA_AMPLIFIER);
+	 	}
+	 	if(Read_LIGHT_Data_Valid == 1) //显示光源信息
+	 	{
+	 		if(*(ReceivedBuffer_LIGHT+8) == 0x80)
+	 		{
+	 			Read_LIGHT_Power = (((u16)*(ReceivedBuffer_LIGHT+23)) << 8) + (*(ReceivedBuffer_LIGHT+24)); //光源输出功率
+	 		}
+
+	 		Dw_Data_Write(BEACON_BEAM_OUT_DATA_ADDR,(int16_t)Read_LIGHT_Power,4);
+	 		usleep(20);
+	 		Read_LIGHT_Data_Valid = 0;
+	 		EDFA_ReadAll(EDFA_LIGHT);
+	 	}
+	 	if(Read_DATA_RADIO_Data_Valid == 1) //获取对方航姿信息
+	 	{
+	 		Peer_latitude_Temp = ((u32)*(ReceivedBuffer_DATA_RADIO+3) << 24) + ((u32)*(ReceivedBuffer_DATA_RADIO+4) << 16)
+	 							+ ((u32)*(ReceivedBuffer_DATA_RADIO+5) << 8) + ((u32)*(ReceivedBuffer_DATA_RADIO+6));  //经度
+	 		Peer_longtidue_Temp = ((u32)*(ReceivedBuffer_DATA_RADIO+7) << 24) + ((u32)*(ReceivedBuffer_DATA_RADIO+8) << 16)
+	 			 				+ ((u32)*(ReceivedBuffer_DATA_RADIO+9) << 8) + ((u32)*(ReceivedBuffer_DATA_RADIO+10));  //维度
+	 		Peer_altidue_Temp = ((u32)*(ReceivedBuffer_DATA_RADIO+11) << 24) + ((u32)*(ReceivedBuffer_DATA_RADIO+12) << 16)
+	 			 			 	+ ((u32)*(ReceivedBuffer_DATA_RADIO+9) << 13) + ((u32)*(ReceivedBuffer_DATA_RADIO+14));  //高度
+	 		//计算的到实际经纬高
+	 		Peer_latitude = (double)Peer_latitude_Temp / 1000000;
+	 		Peer_longtidue = (double)Peer_longtidue_Temp / 1000000;
+	 		Peer_altidue = (double)Peer_altidue_Temp/1000000;
+	 		//显示到迪文屏上
+	 		Dw_Data_Write(O_ATT_DIM_ADDR,Peer_latitude*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(O_ATT_LON_ADDR,Peer_longtidue*1000,4);
+	 		usleep(20);
+	 		Dw_Data_Write(O_ATT_H_ADDR,Peer_altidue*1000,4);
+	 		usleep(20);
+	 		Read_DATA_RADIO_Data_Valid = 0;
+
+
+	 	}
+	 	if(COARSE_CAMERA_Mark == 1) //开启粗跟踪相机
+	 	{
+	 		Dw_Data_Write(COARSE_CAMERA_FPS_ADDR,(u16)Speed_Coarse,2);
+	 		usleep(20);
+	 	}
+	 	if(FINE_CAMERA_Mark == 1) //开启精跟踪相机
+	 	{
+	 		Dw_Data_Write(FINE_CAMERA_FPS_ADDR,(u16)Speed_Fine,2);
+	 		usleep(20);
+	 	}
+
+
+	 }
+ }
+
+
+ /*
+  * 初始化地文屏数据
+  * */
+ void Dw_Systems_Config()
+ {
+	 //粗跟踪参数显示
+	 Dw_Data_Write(COARSE_CAMERA_WIDTH_ADDR,Coarse_ROI_Width,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_HEIGHT_ADDR,Coarse_ROI_Height,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_WIDTH_PAR_ADDR,Coarse_ROI_Width_Par,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_HEIGHT_PAR_ADDR,Coarse_ROI_Height_Par,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_EXTIME_ADDR,Coarse_Camera_Extime,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_THR_ADDR,COARSE_CAMERA_THR,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_X_ADDR,COARSE_CAMERA_TRA_X,2);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_Y_ADDR,COARSE_CAMERA_TRA_Y,2);
+	 usleep(1000);
+	 //精跟踪参数显示
+	 Dw_Data_Write(FINE_CAMERA_WIDTH_ADDR,Fine_ROI_Width,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_HEIGHT_ADDR,Fine_ROI_Height,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_WIDTH_PAR_ADDR,Fine_ROI_Width_Par,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_HEIGHT_PAR_ADDR,Fine_ROI_Height_Par,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_EXTIME_ADDR,Fine_Camera_Extime,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_THR_ADDR,FINE_CAMERA_THR,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_X_ADDR,FINE_CAMERA_TRA_X,2);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_Y_ADDR,FINE_CAMERA_TRA_Y,2);
+	 usleep(1000);
+
+	 //振镜电压
+	 Dw_Data_Write(PZT_V_X_ADDR,fine_camera_out_x*1000,4);
+	 usleep(1000);
+	 Dw_Data_Write(PZT_V_Y_ADDR,fine_camera_out_y*1000,4);
+	 usleep(1000);
+
+	 //粗跟踪参数初始化
+	 Dw_Data_Write(COARSE_CAMERA_TRA_PX_ADDR,coarse_camera_Px*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_IX_ADDR,coarse_camera_Ix*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_DX_ADDR,coarse_camera_Dx*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_PY_ADDR,coarse_camera_Py*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_IY_ADDR,coarse_camera_Iy*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(COARSE_CAMERA_TRA_DY_ADDR,coarse_camera_Dy*100,4);
+	 usleep(1000);
+	 //精跟踪参数初始化
+	 Dw_Data_Write(FINE_CAMERA_TRA_PX_ADDR,fine_camera_Px*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_IX_ADDR,fine_camera_Ix*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_DX_ADDR,fine_camera_Dx*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_PY_ADDR,fine_camera_Py*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_IY_ADDR,fine_camera_Iy*100,4);
+	 usleep(1000);
+	 Dw_Data_Write(FINE_CAMERA_TRA_DY_ADDR,fine_camera_Dy*100,4);
+	 usleep(1000);
+
+
+ }
+
+ /*
+  * 迪文屏界面控制
+  * */
+ void Dw_Systems_Control()
+ {
+	 u16 		Dw_Out_Addr;
+	 int32_t	Dw_Out_Data;
+
+	 if(Dw_Read_Data_valid) //迪文屏数据有效
+	 {
+		 Dw_Read_Data_valid = 0; //数据失效
+		 Dw_Data_Read(Dw_Read_Data,&Dw_Out_Addr,&Dw_Out_Data);//对迪文屏发送的数据进行解码
+
+		 //根据迪文屏地址和数据进行模块控制
+		 switch(Dw_Out_Addr)
+		 {
+		 	 case COARSE_CAMERA_ADDR:	//粗跟踪相机
+		 		 if(Dw_Out_Data == OPEN_COARSE_CAMERA_DATA) //开启粗跟踪相机
+		 		 {
+		 			COARSE_CAMERA_Mark = 1;
+		 		 }
+		 		 else if(Dw_Out_Data == CLOSE_COARSE_CAMERA_DATA)//关闭粗跟踪相机
+		 		 {
+		 			COARSE_CAMERA_Mark = 0;
+		 		 }
+		 		 break;
+		 	 case FINE_CAMERA_ADDR:	//精跟踪相机
+		 		 if(Dw_Out_Data == OPEN_FINE_CAMERA_DATA) //开启精跟踪相机
+		 			FINE_CAMERA_Mark = 1;
+		 		 else if(Dw_Out_Data == CLOSE_FINE_CAMERA_DATA)//关闭精跟踪相机
+		 			FINE_CAMERA_Mark = 0;
+		 		 break;
+		 	 case COARSE_TRA_ADDR: //粗跟踪
+		 		 if(Dw_Out_Data == START_COARSE_TRA_DATA) //开启粗跟踪
+		 		 {
+		 			COARSE_TRA_Mark = 1;
+		 			Elmo_Speed_Model(); //设置速度模式
+		 		 }
+		 		 else if(Dw_Out_Data == STOP_COARSE_TRA_DATA)//关闭粗跟踪
+		 		 {
+		 			COARSE_TRA_Mark = 0;
+		 			//设置电机速度为0
+		 			Elmo_Set_Speed(MOTO_Y_ID,0);
+		 			Elmo_Set_Speed(MOTO_X_ID,0);
+		 		 }
+		 		 break;
+		 	 case FINE_TRA_ADDR: //精跟踪
+		 		 if(Dw_Out_Data == START_FINE_TRA_DATA) //开启精跟踪
+		 		 {
+		 			FINE_TRA_Mark = 1;
+		 		 }
+		 		 else if(Dw_Out_Data == STOP_FINE_TRA_DATA)//关闭精跟踪
+		 		 {
+		 			FINE_TRA_Mark = 0;
+		 		 }
+		 		 break;
+		 	 case BEACON_BEAM_ADDR: //信标光
+		 		 if(Dw_Out_Data == OPEN_BEACON_BEAM_DATA) //开泵
+		 		 {
+		 			EDFA_On(EDFA_LIGHT);
+		 		 }
+		 		 else if(Dw_Out_Data == CLOSE_BEACON_BEAM_DATA) //关泵
+		 		 {
+		 			EDFA_Off(EDFA_LIGHT);
+		 		 }
+		 		 break;
+		 	 case SIGNAL_LIGHT_ADDR: //信号光
+		 		 if(Dw_Out_Data == OPEN_SIGNAL_LIGHT_DATA) //开泵
+		 		 {
+		 			EDFA_On(EDFA_AMPLIFIER);
+		 		 }
+		 		 else if(Dw_Out_Data == CLOSE_SIGNAL_LIGHT_DATA)	//关泵
+		 		 {
+		 			EDFA_Off(EDFA_AMPLIFIER);
+		 		 }
+		 		 break;
+		 	 case MOTOR_ADDR: //电机
+		 		 if(Dw_Out_Data == MOTOR_ENABLE_DATA) //电机使能
+		 		 {
+		 			Elmo_StartServe();
+		 		 }
+		 		 else if(Dw_Out_Data == MOTOR_DISENABLE_DATA)//电机失能
+		 		 {
+		 			Elmo_StopServe();
+		 		 }
+		 		 break;
+		 	 case STAB_ADDR://稳定
+		 		 if(Dw_Out_Data == START_STAB_DATA) //开始稳定
+		 		 {
+		 			STAB_Mark = 1;
+		 		 }
+		 		 else if(Dw_Out_Data == STOP_STAB_DATA) //停止稳定
+		 		 {
+		 			STAB_Mark = 0;
+		 		 }
+		 		 break;
+		 	 case MOTOR_MODE_ADDR://电机模式
+		 		 if(Dw_Out_Data == MOTOR_MODE_V_DATA) //速度模式
+		 		 {
+		 			 Elmo_Speed_Model();
+		 		 }
+		 		 else if(Dw_Out_Data == MOTOR_MODE_P_DATA)	//位置模式
+		 		 {
+		 			Elmo_Position_Model();
+		 		 }
+		 		 break;
+		 	 case BEACON_BEAM_OUT_ADDR://信标光输出
+		 		Out_data = Dw_Out_Data;
+		 		EDFA_Set_Light_Power(EDFA_LIGHT,Out_data);
+		 		break;
+		 	 case SIGNAL_LIGHT_OUT_ADDR: //信号光输出
+		 		Out_data = Dw_Out_Data;
+		 		EDFA_SetPower(EDFA_AMPLIFIER,Out_data);
+		 		break;
+		 	 case MOTOR_POINT_X_ADDR://电机指向X
+		 		Elmo_Position_Model_X(); //设置位置模式
+		 		Elmo_Set_Position(MOTO_X_ID,(double)Dw_Out_Data/1000); //指向
+		 		break;
+		 	case MOTOR_POINT_Y_ADDR: //电机指向Y
+		 		Elmo_Position_Model_Y(); //设置位置模式
+		 		Elmo_Set_Position(MOTO_Y_ID,(double)Dw_Out_Data/1000); //指向
+		 		break;
+		 	case MOTOR_UP_ADDR://电机运动——上
+		 		if(Dw_Out_Data == MOTOR_UP_START_DATA)
+		 		{
+		 			Elmo_Speed_Model();
+		 			Elmo_Set_Speed(MOTO_Y_ID,10);
+		 		}
+		 		else if(Dw_Out_Data == MOTOR_UP_STOP_DATA)
+		 		{
+		 			Elmo_Set_Speed(MOTO_Y_ID,0);
+		 		}
+		 		break;
+		 	case MOTOR_DOWN_ADDR://电机运动——下
+		 		if(Dw_Out_Data == MOTOR_DOWN_START_DATA)
+		 		{
+		 			Elmo_Speed_Model();
+		 			Elmo_Set_Speed(MOTO_Y_ID,-10);
+		 		}
+		 		else if(Dw_Out_Data == MOTOR_DOWN_STOP_DATA)
+		 		{
+		 			Elmo_Set_Speed(MOTO_Y_ID,0);
+		 		}
+		 		break;
+		 	case MOTOR_RIGHT_ADDR://电机运动——右
+		 		if(Dw_Out_Data == MOTOR_RIGHT_START_DATA)
+		 		{
+		 			Elmo_Speed_Model();
+		 			Elmo_Set_Speed(MOTO_X_ID,10);
+		 		}
+		 		else if(Dw_Out_Data == MOTOR_RIGHT_STOP_DATA)
+		 		{
+		 			Elmo_Set_Speed(MOTO_X_ID,0);
+		 		}
+		 		break;
+		 	case MOTOR_LEFT_ADDR://电机运动——左
+		 		if(Dw_Out_Data == MOTOR_LEFT_START_DATA)
+		 		{
+		 			Elmo_Speed_Model();
+		 			Elmo_Set_Speed(MOTO_X_ID,-10);
+		 		}
+		 		else if(Dw_Out_Data == MOTOR_LEFT_STOP_DATA)
+		 		{
+		 			Elmo_Set_Speed(MOTO_X_ID,0);
+		 		}
+		 		break;
+		 	case PZT_OUT_X_ADDR://振镜电压输出X
+		 		fine_camera_out_x = (float)Dw_Out_Data/1000;
+		 		Set_PZT_X_Out(fine_camera_out_x);
+		 		break;
+		 	case PZT_OUT_Y_ADDR://振镜电压输出Y
+		 		fine_camera_out_y = (float)Dw_Out_Data/1000;
+		 		Set_PZT_Y_Out(fine_camera_out_y);
+		 		break;
+		 	case COARSE_CAMERA_THR_ADDR://粗跟踪跟踪阈值
+		 		COARSE_CAMERA_THR = Dw_Out_Data;
+		 		Set_Coaser_Threshold(COARSE_CAMERA_THR);
+		 		break;
+		 	case COARSE_CAMERA_TRA_X_ADDR://粗跟踪跟踪中心X
+		 		COARSE_CAMERA_TRA_X = Dw_Out_Data;
+		 		break;
+		 	case COARSE_CAMERA_TRA_Y_ADDR://粗跟踪跟踪中心Y
+		 		COARSE_CAMERA_TRA_Y = Dw_Out_Data;
+		 		break;
+		 	case FINE_CAMERA_THR_ADDR://精跟踪跟踪阈值
+		 		FINE_CAMERA_THR = Dw_Out_Data;
+		 		Set_Fine_Threshold(FINE_CAMERA_THR);
+		 		break;
+		 	case FINE_CAMERA_TRA_X_ADDR://精跟踪跟踪中心X
+		 		FINE_CAMERA_TRA_X = Dw_Out_Data;
+		 		break;
+		 	case FINE_CAMERA_TRA_Y_ADDR://精跟踪跟踪中心Y
+		 		FINE_CAMERA_TRA_Y = Dw_Out_Data;
+		 		break;
+		 	case COARSE_CAMERA_TRA_PX_ADDR://粗跟踪参数Px
+		 		coarse_camera_Px = (double)Dw_Out_Data/100;
+		 		break;
+		 	case COARSE_CAMERA_TRA_IX_ADDR://粗跟踪参数Ix
+		 		coarse_camera_Ix = (double)Dw_Out_Data/100;
+		 		break;
+		 	case COARSE_CAMERA_TRA_DX_ADDR://粗跟踪参数Dx
+		 		coarse_camera_Dx = (double)Dw_Out_Data/100;
+		 		break;
+		 	case COARSE_CAMERA_TRA_PY_ADDR://粗跟踪参数Py
+		 		coarse_camera_Py = (double)Dw_Out_Data/100;
+		 		break;
+		 	case COARSE_CAMERA_TRA_IY_ADDR://粗跟踪参数Iy
+		 		coarse_camera_Iy = (double)Dw_Out_Data/100;
+		 		break;
+		 	case COARSE_CAMERA_TRA_DY_ADDR://粗跟踪参数Dy
+		 		coarse_camera_Dy = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_PX_ADDR://精跟踪参数Px
+		 		fine_camera_Px = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_IX_ADDR://精跟踪参数Ix
+		 		fine_camera_Ix = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_DX_ADDR://精跟踪参数Dx
+		 		fine_camera_Dx = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_PY_ADDR://精跟踪参数Py
+		 		fine_camera_Py = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_IY_ADDR://精跟踪参数Iy
+		 		fine_camera_Iy = (double)Dw_Out_Data/100;
+		 		break;
+		 	case FINE_CAMERA_TRA_DY_ADDR://精跟踪参数Dy
+		 		fine_camera_Dy = (double)Dw_Out_Data/100;
+		 		break;
+		 	case SDI_CHOICE_ADDR://SDI显示选择
+		 		if(Dw_Out_Data == SDI_CHOICE_COARSE) //显示粗跟踪相机图像
+		 		{
+		 			Sdi_Show_Choice(0);
+		 		}
+		 		else if(Dw_Out_Data == SDI_CHOICE_FINE) //显示精跟踪相机图像
+		 		{
+		 			Sdi_Show_Choice(1);
+		 		}
+		 		break;
+		 	case START_POINT_ADDR: //初始指向
+		 		Start_Point_Mark = 1;
+		 		Elmo_Position_Model(); //设置位置模式
+		 		Elmo_Set_Position(MOTO_X_ID,0); //初始指向X
+		 		Elmo_Set_Position(MOTO_Y_ID,0); //初始指向y
+		 		break;
+		 	case SCAN_ADDR://扫描标志
+		 		if(Dw_Out_Data == START_SCAN_ADDR) //开始扫描
+		 		{
+		 			Start_Scan_Mark = 1;
+		 			Scan_X_Satrt = Motor_X_Position - Scan_Step*Scan_Num/2;
+		 			Scan_Y_Satrt = Motor_Y_Position - Scan_Step*Scan_Num/2;
+		 			Scan_X_Point = Scan_X_Satrt;
+		 			Scan_Y_Point = Scan_Y_Satrt;
+		 			Scan_X_Cnt = 0;
+		 			Scan_Y_Cnt = 0;
+		 		}
+		 		else if(Dw_Out_Data == STOP_SCAN_ADDR) //停止扫描
+		 		{
+		 			Start_Scan_Mark = 0;
+		 		}
+		 	case COARSE_CAMERA_WIDTH_ADDR://更改粗相机跟踪宽度
+		 		Coarse_Camera_ROI_Set(Coarse_ROI_Width_Par,Dw_Out_Data,Coarse_ROI_Height_Par,Coarse_ROI_Height);
+		 		Dw_Data_Write(COARSE_CAMERA_WIDTH_ADDR,Coarse_ROI_Width,2);
+		 		break;
+		 	case COARSE_CAMERA_HEIGHT_ADDR://更改粗相机跟踪高度
+		 		Coarse_Camera_ROI_Set(Coarse_ROI_Width_Par,Coarse_ROI_Width,Coarse_ROI_Height_Par,Dw_Out_Data);
+		 		Dw_Data_Write(COARSE_CAMERA_HEIGHT_ADDR,Coarse_ROI_Height,2);
+		 		break;
+		 	case COARSE_CAMERA_WIDTH_PAR_ADDR://更改粗相机宽度偏置
+		 		Coarse_Camera_ROI_Set(Dw_Out_Data,Coarse_ROI_Width,Coarse_ROI_Height_Par,Coarse_ROI_Height);
+		 		Dw_Data_Write(COARSE_CAMERA_WIDTH_PAR_ADDR,Coarse_ROI_Width_Par,2);
+		 		break;
+		 	case COARSE_CAMERA_HEIGHT_PAR_ADDR://更改粗相机高度偏置
+		 		Coarse_Camera_ROI_Set(Coarse_ROI_Width_Par,Coarse_ROI_Width,Dw_Out_Data,Coarse_ROI_Height);
+		 		Dw_Data_Write(COARSE_CAMERA_HEIGHT_PAR_ADDR,Coarse_ROI_Height_Par,2);
+		 		break;
+		 	case COARSE_CAMERA_EXTIME_ADDR://更改粗跟踪相机曝光时间
+		 		Coarse_Camera_ExSet(Dw_Out_Data);
+		 		Dw_Data_Write(COARSE_CAMERA_EXTIME_ADDR,Coarse_Camera_Extime,4);
+		 		break;
+		 	case FINE_CAMERA_WIDTH_ADDR://更改精相机跟踪宽度
+		 		Fine_Camera_ROI_Set(Fine_ROI_Width_Par,Dw_Out_Data,Fine_ROI_Height_Par,Fine_ROI_Height);
+		 		Dw_Data_Write(FINE_CAMERA_WIDTH_ADDR,Fine_ROI_Width,2);
+		 		break;
+		 	case FINE_CAMERA_HEIGHT_ADDR://更改精相机跟踪高度
+		 		Fine_Camera_ROI_Set(Fine_ROI_Width_Par,Fine_ROI_Width,Fine_ROI_Height_Par,Dw_Out_Data);
+		 		Dw_Data_Write(FINE_CAMERA_HEIGHT_ADDR,Fine_ROI_Height,2);
+		 		break;
+		 	case FINE_CAMERA_WIDTH_PAR_ADDR://更改精相机宽度偏置
+		 		Fine_Camera_ROI_Set(Dw_Out_Data,Fine_ROI_Width,Fine_ROI_Height_Par,Fine_ROI_Height);
+		 		Dw_Data_Write(FINE_CAMERA_WIDTH_PAR_ADDR,Fine_ROI_Width_Par,2);
+		 		break;
+		 	case FINE_CAMERA_HEIGHT_PAR_ADDR://更改精相机高度偏置
+		 		Fine_Camera_ROI_Set(Fine_ROI_Width_Par,Fine_ROI_Width,Dw_Out_Data,Fine_ROI_Height);
+		 		Dw_Data_Write(FINE_CAMERA_HEIGHT_PAR_ADDR,Fine_ROI_Height_Par,2);
+		 		break;
+		 	case FINE_CAMERA_EXTIME_ADDR://更改精跟踪相机曝光时间
+		 		Fine_Camera_ExSet(Dw_Out_Data);
+		 		Dw_Data_Write(FINE_CAMERA_EXTIME_ADDR,Fine_Camera_Extime,4);
+		 		break;
+		 	case O_ATT_DIM_ADDR://输入指向维度
+		 		Peer_latitude = (double)Dw_Out_Data/1000;
+		 		break;
+		 	case O_ATT_LON_ADDR://输入指向经度
+		 		Peer_longtidue = (double)Dw_Out_Data/1000;
+		 		break;
+		 	case O_ATT_H_ADDR://输入指向高度
+		 		Peer_altidue = (double)Dw_Out_Data/1000;
+		 		break;
+
+		 }
+		 memset(Dw_Read_Data,0,sizeof(Dw_Read_Data)*sizeof(Dw_Read_Data[0]));
+	 }
+ }
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="lasercom" location="E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom" platform="E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm" platformUID="xilinx:::0.0(custom)" systemProject="lasercom_system" sysConfig="lasercom_pl_total_v0_wrapper" runtime="cpp" cpu="standalone_psu_cortexa53_0" cpuInstance="psu_cortexa53_0" os="standalone" language="CPP" mssSignature="a70cdedfc697d474c2d8dacd48513788">
+  <configuration name="Debug" id="xilinx.gnu.arm.a53.exe.debug.1404376392">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.arm.a53.exe.release.258472687" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="empty_application"/>
+</sdkproject:SdkProject>

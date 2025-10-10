@@ -1,0 +1,14 @@
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Found the complete platform E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/lasercom_pl_total_v0_wrapper.xpfm
+TRACE::2024-08-20.21:24:42::SCWBifWriter::hardware databse : lasercom_pl_total_v0_wrapper_1
+TRACE::2024-08-20.21:24:42::SCWBifWriter::bitstream found in the design
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Found a baremetal domain, proc: psu_cortexa53_0
+TRACE::2024-08-20.21:24:42::SCWBifWriter::proc type : 
+TRACE::2024-08-20.21:24:42::SCWBifWriter::proc[0] : psu_cortexa53_0
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Device type is : zynqMP
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Writing BIF to file : E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_system/_ide/bootimage/template_lasercom_system.bif
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Writing the ZynqMP baremetal bif 
+TRACE::2024-08-20.21:24:42::SCWBifWriter::System Command Ran  E:/Xilinx/Vitis/2023.2/gnu/aarch64/nt/aarch64-none/bin/aarch64-none-elf-readelf -A  E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/fsbl.elf
+TRACE::2024-08-20.21:24:42::SCWBifWriter:: Command Ran  E:/Xilinx/Vitis/2023.2/gnu/aarch64/nt/aarch64-none/bin/aarch64-none-elf-readelf -A  E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/fsbl.elf
+TRACE::2024-08-20.21:24:42::SCWBifWriter::FSBL processor, command ran E:/Xilinx/Vitis/2023.2/gnu/aarch64/nt/aarch64-none/bin/aarch64-none-elf-readelf -A  E:/FPGA_Code/10G_1km/lasercom_ps_total/lasercom_ps_total_v12/lasercom_pl_total_v0_wrapper/export/lasercom_pl_total_v0_wrapper/sw/fsbl.elf
+TRACE::2024-08-20.21:24:42::SCWBifWriter::FSBL target processor is a53-0
+TRACE::2024-08-20.21:24:42::SCWBifWriter::Boot processor is :a53-0
